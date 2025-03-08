@@ -9,7 +9,29 @@ const CartItem = ({ onContinueShopping }) => {
 
   // Calculate total amount for all products in the cart
   const calculateTotalAmount = () => {
-    return cart.reduce((total, item) => total + calculateTotalCost(item), 0).toFixed(2);
+    if (!Array.isArray(cart) || cart.length === 0) return "0.00"; // Handle empty cart
+
+    console.log("Cart:", cart);
+    cart.forEach(item => {
+        console.log("Item:", item);
+        console.log("Cost before parse:", item?.cost);
+        console.log("Cost after parse:", parseFloat(item?.cost?.replace('$', '')));
+        console.log("Quantity:", item?.quantity);
+    });
+
+
+    return cart.reduce((total, item) => {
+        // Ensure item and its properties are valid
+        if (!item || !item.cost || isNaN(item.quantity)) return total;
+
+        // Convert cost to a number safely
+        const itemCost = parseFloat(item.cost.replace('$', ''));
+
+        // Ensure itemCost is a valid number
+        if (isNaN(itemCost)) return total;
+
+        return total + item.quantity * itemCost;
+    }, 0).toFixed(2);
   };
 
   const handleContinueShopping = (e) => {
