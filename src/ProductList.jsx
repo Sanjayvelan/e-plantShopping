@@ -289,12 +289,13 @@ function ProductList({ onHomeClick }) {
                             <h2>{category.category}</h2>
                             <div className="plant-category">
                                 {category.plants.map((plant, idx) => (
-                                    <div key={idx} className="plant-card">
-                                        <img src={plant.image} alt={plant.name} className="plant-image" />
-                                        <h3>{plant.name}</h3>
+                                    <div key={idx} className="product-card">
+                                        <img src={plant.image} alt={plant.name} className="product-image" />
+                                        <h3 className="product-title">{plant.name}</h3>
                                         <p>{plant.description}</p>
-                                        <p><strong>{plant.cost}</strong></p>
+                                        <p className="product-price"><strong>{plant.cost}</strong></p>
                                         <button 
+                                            className="product-button"
                                             onClick={() => handleAddToCart(plant)}
                                             disabled={addedToCart[plant.name]}
                                         >
